@@ -1,0 +1,757 @@
+:root{--bg:#080d16;--panel:#101a29;--panel2:#0c1421;--line:#203147;--text:#e8f0fa;--muted:#8293a8;--cyan:#4de3d1;--lime:#b5f36d;--red:#ff7185}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}.shell{display:flex;min-height:100vh}.sidebar{width:235px;background:#0a111d;border-right:1px solid var(--line);padding:28px 18px;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:11px;margin:3px 0 55px}.brand-mark{width:38px;height:38px;border:1px solid var(--cyan);color:var(--cyan);display:grid;place-items:center;font-size:23px;font-weight:800;transform:rotate(45deg)}.brand-mark+div b,.brand small{display:block}.brand b{letter-spacing:2px;font-size:14px}.brand small{font-size:8px;color:var(--muted);letter-spacing:1.5px;margin-top:5px}.side-label,.eyebrow{font-size:9px;letter-spacing:2px;color:var(--cyan);font-weight:700}.side-label{color:#60738a;margin:0 0 14px 10px}.nav{padding:13px 12px;color:#9aabc0;text-decoration:none;font-size:13px;border-radius:5px;margin:3px 0}.nav.active,.nav:hover{background:#142638;color:var(--cyan)}.sidebar-note{margin-top:auto;color:#8293a8;font-size:9px;letter-spacing:1px}.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);margin-right:7px}.main{max-width:1500px;width:100%;padding:30px 4.5% 20px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.topbar h1{font-size:25px;margin:8px 0 0}.live{font-size:9px;letter-spacing:1.4px;color:var(--lime);border:1px solid #35513b;padding:10px 13px;border-radius:3px}.hero{background:linear-gradient(110deg,#10283a,#101c2b 60%,#14283a);border:1px solid #26465a;padding:30px 34px;display:flex;justify-content:space-between;align-items:center;min-height:205px;position:relative;overflow:hidden}.hero h2{font-size:32px;line-height:1.2;margin:12px 0}.hero h2 em{font-style:normal;color:var(--cyan)}.hero p,.panel p{color:var(--muted);font-size:12px;line-height:1.7;max-width:580px}.hero-symbol{font-size:115px;color:#3ed6ca;opacity:.2;padding:0 45px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:18px 0}.stat,.panel{background:var(--panel);border:1px solid var(--line);padding:20px}.stat span{display:block;color:var(--muted);font-size:9px;letter-spacing:1.5px}.stat b{display:block;font-size:29px;margin:9px 0 4px}.stat small,.hint{color:#71849a;font-size:10px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel-head{display:flex;justify-content:space-between;align-items:center}.panel h3{font-size:17px;margin:7px 0}.tag{font-size:8px;letter-spacing:1px;color:var(--cyan);border:1px solid #28535c;padding:6px 8px}.panel label{display:block;font-size:9px;letter-spacing:1.4px;color:#a9bacb;margin:19px 0 8px}.input-row{display:flex;gap:8px}.input-row input{min-width:0;flex:1;background:#09111c;border:1px solid #2b3c50;color:white;padding:12px;font-size:12px;outline:none}.input-row input:focus{border-color:var(--cyan)}button{background:var(--cyan);border:0;color:#07131a;padding:0 13px;font-weight:800;font-size:9px;letter-spacing:.6px;cursor:pointer}button:disabled{opacity:.5;cursor:wait}.hint{display:block;margin-top:12px}.result{margin-top:14px;background:#0a1420;border-left:3px solid var(--cyan);padding:12px;font-size:11px;line-height:1.7;overflow-wrap:anywhere}.result.error{border-color:var(--red)}.result strong{color:var(--cyan)}.result ul{padding-left:18px;margin:7px 0}.hidden{display:none}.history{margin-top:17px}.refresh{background:transparent;color:var(--cyan);border:1px solid #2a5960;padding:8px 10px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;margin-top:16px;font-size:11px;text-align:left}th{color:#73869d;font-size:9px;letter-spacing:1px}td,th{padding:12px 9px;border-bottom:1px solid #1d2b3c}td{color:#c0ccda}.risk{font-weight:700}.risk.High{color:var(--red)}.risk.Medium{color:#ffc66d}.risk.Low{color:var(--lime)}footer{text-align:center;color:#60738a;font-size:9px;padding:25px 0 8px}@media(max-width:850px){.sidebar{width:65px;padding:20px 10px}.brand{margin-bottom:40px}.brand>div,.side-label,.nav:not(.active),.sidebar-note{display:none}.nav.active{font-size:0}.nav.active:first-letter{font-size:16px}.main{padding:22px 16px}.grid{grid-template-columns:1fr}}@media(max-width:520px){.stats{grid-template-columns:1fr}.hero{padding:22px}.hero h2{font-size:25px}.hero-symbol{display:none}.topbar h1{font-size:19px}.live{font-size:8px}}
+.strength-result {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.strength-result.weak {
+    background: #3b1111 !important;
+    color: #ff4444 !important;
+    border: 1px solid #ff4444;
+}
+
+.strength-result.medium {
+    background: #3b2b0b !important;
+    color: #ffb347 !important;
+    border: 1px solid #ffb347;
+}
+
+.strength-result.strong {
+    background: #123b20 !important;
+    color: #4dff88 !important;
+    border: 1px solid #4dff88;
+}
+
+.strength-result.very-strong {
+    background: #102c45 !important;
+    color: #45caff !important;
+    border: 1px solid #45caff;
+}
+#passwordForm,
+#passwordResult,
+#copyPassword {
+    display: none !important;
+}
+/* DARKWATCH LOGIN AND REGISTER */
+
+.auth-body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #050807;
+    color: #eaffea;
+    font-family: Arial, sans-serif;
+}
+
+.auth-container {
+    width: 90%;
+    max-width: 420px;
+    padding: 40px;
+    background: #0b1210;
+    border: 1px solid #00ff88;
+    border-radius: 14px;
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.15);
+    text-align: center;
+}
+
+.auth-logo {
+    width: 55px;
+    height: 55px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #00ff88;
+    color: #000;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 12px;
+}
+
+.auth-container h1 {
+    color: #00ff88;
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+}
+
+.auth-subtitle {
+    color: #6b9b82;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.auth-container h2 {
+    margin-top: 35px;
+    color: #ffffff;
+}
+
+.auth-description {
+    color: #8a9c91;
+    font-size: 14px;
+}
+
+.auth-container form {
+    margin-top: 25px;
+    text-align: left;
+}
+
+.auth-container label {
+    display: block;
+    margin: 15px 0 7px;
+    color: #00ff88;
+    font-size: 13px;
+}
+
+.auth-container input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    background: #101b16;
+    border: 1px solid #263d31;
+    border-radius: 6px;
+    color: white;
+    outline: none;
+}
+
+.auth-container input:focus {
+    border-color: #00ff88;
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.2);
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px;
+    background: #00ff88;
+    color: #00150b;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-container button:hover {
+    background: #00cc70;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+.auth-footer {
+    margin-top: 25px;
+    color: #8a9c91;
+    font-size: 13px;
+}
+
+.auth-footer a {
+    color: #00ff88;
+    text-decoration: none;
+}
+
+.auth-message {
+    margin-top: 15px;
+    padding: 10px;
+    background: #241515;
+    border: 1px solid #ff5555;
+    color: #ff7777;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.auth-security {
+    margin-top: 30px;
+    color: #00ff88;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 25px;
+    }
+}
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    padding-right: 45px;
+}
+
+.password-wrapper .eye-btn {
+    position: absolute;
+    right: 5px;
+    background: transparent;
+    color: #00ff88;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+/* FIX PASSWORD EYE BUTTON */
+
+.auth-container .password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.auth-container .password-wrapper input {
+    width: 100%;
+    padding-right: 45px;
+}
+
+.auth-container .password-wrapper .eye-btn {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px !important;
+    height: 35px;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: #00ff88;
+    border: none;
+    box-shadow: none !important;
+    font-size: 17px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-container .password-wrapper .eye-btn:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.logout {
+    margin-top: auto;
+    color: #ff7185 !important;
+    border: 1px solid #442431;
+}
+
+.logout:hover {
+    background: #301722 !important;
+    color: #ff7185 !important;
+}
+/* DARKWATCH MODERN CYBER COMMAND THEME */
+
+:root {
+    --bg: #080c0a;
+    --panel: #111713;
+    --panel2: #0b100d;
+    --line: #26352b;
+    --text: #e8f5eb;
+    --muted: #91a397;
+    --cyan: #00ff99;
+    --lime: #b5ff70;
+    --red: #ff7185;
+}
+
+body {
+    background:
+        radial-gradient(ellipse at top left, #263d20 0%, transparent 35%),
+        #080c0a !important;
+    background-attachment: fixed;
+}
+
+.sidebar {
+    background: rgba(8, 14, 10, 0.96);
+    border-right: 1px solid #263a2c;
+}
+
+.main {
+    background: transparent;
+}
+
+.stat,
+.panel {
+    background: rgba(18, 25, 20, 0.94);
+    border: 1px solid #26372b;
+    border-radius: 14px;
+    transition: all 0.3s ease;
+}
+
+.stat:hover,
+.panel:hover {
+    border-color: #00ff99;
+    box-shadow: 0 0 18px rgba(0, 255, 153, 0.08);
+    transform: translateY(-3px);
+}
+
+.hero {
+    background: linear-gradient(
+        120deg,
+        #19271d,
+        #111a14,
+        #202c20
+    );
+    border: 1px solid #344b37;
+    border-radius: 16px;
+}
+
+.nav {
+    border-radius: 9px;
+    transition: 0.3s ease;
+}
+
+.nav.active,
+.nav:hover {
+    background: #1b3022;
+    color: #00ff99;
+}
+
+.live {
+    border-color: #315b3c;
+    border-radius: 20px;
+}
+
+.input-row input {
+    background: #0c130e;
+    border-color: #344638;
+    border-radius: 8px;
+}
+
+button {
+    border-radius: 7px;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    box-shadow: 0 0 14px rgba(0, 255, 153, 0.3);
+}
+
+.result {
+    background: #0b140e;
+    border-radius: 8px;
+}
+
+table {
+    border-radius: 10px;
+}
+
+.stat b {
+    color: #b5ff70;
+}
+
+.hero h2 em {
+    color: #00ff99;
+}
+
+@keyframes greenGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 255, 153, 0.05);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(0, 255, 153, 0.12);
+    }
+}
+
+.live {
+    animation: greenGlow 3s infinite;
+}
+/* DARKWATCH COMMAND CENTER HEADER */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 25px;
+    margin-bottom: 25px;
+    background: rgba(13, 22, 17, 0.9);
+    border: 1px solid rgba(0, 255, 136, 0.18);
+    border-radius: 14px;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.04);
+}
+
+.topbar-left,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #b7c9bd;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #00ff88;
+    animation: statusPulse 1.5s infinite;
+}
+
+.live-indicator {
+    color: #00ff88;
+}
+
+.user-label {
+    padding: 8px 12px;
+    border: 1px solid #294333;
+    border-radius: 7px;
+    color: #d5e9dc;
+}
+
+@keyframes statusPulse {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 12px #00ff88;
+    }
+    50% {
+        opacity: 0.4;
+        box-shadow: 0 0 3px #00ff88;
+    }
+}
+/* DARKWATCH HERO SECTION */
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px;
+    margin-bottom: 25px;
+    min-height: 210px;
+    background: linear-gradient(120deg, #101b14, #0b110d);
+    border: 1px solid #263e2e;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    right: 10%;
+    top: -120px;
+    background: rgba(0, 255, 136, 0.08);
+    filter: blur(60px);
+    border-radius: 50%;
+}
+
+.hero h1 {
+    font-size: 34px;
+    margin: 12px 0;
+    color: #eaffef;
+}
+
+.hero h1 span {
+    color: #00ff88;
+}
+
+.hero p {
+    color: #91a397;
+    max-width: 550px;
+    line-height: 1.7;
+}
+
+.hero-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    color: #00ff88;
+    font-size: 13px;
+}
+
+.hero-icon {
+    position: relative;
+    z-index: 1;
+    margin-right: 35px;
+}
+
+.hero-circle {
+    width: 115px;
+    height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #00ff88;
+    border-radius: 50%;
+    color: #00ff88;
+    font-size: 55px;
+    box-shadow: 0 0 35px rgba(0, 255, 136, 0.15);
+    animation: heroGlow 3s infinite alternate;
+}
+
+@keyframes heroGlow {
+    from {
+        box-shadow: 0 0 15px rgba(0, 255, 136, 0.1);
+    }
+    to {
+        box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+    }
+}
+/* DARKWATCH STATISTICS CARDS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin: 25px 0;
+}
+
+.stats .stat {
+    position: relative;
+    padding: 24px;
+    min-height: 155px;
+    background: linear-gradient(145deg, #121d16, #0c130f);
+    border: 1px solid #263d2e;
+    border-radius: 14px;
+    transition: 0.3s ease;
+    overflow: hidden;
+}
+
+.stats .stat:hover {
+    transform: translateY(-5px);
+    border-color: #00ff88;
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.09);
+}
+
+.stats .stat span {
+    display: block;
+    color: #91a397;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+}
+
+.stats .stat b {
+    display: block;
+    margin: 15px 0 8px;
+    color: #eaffef;
+    font-size: 32px;
+}
+
+.stats .stat small {
+    color: #718579;
+    font-size: 12px;
+}
+
+.stat-icon {
+    position: absolute;
+    right: 20px;
+    top: 18px;
+    color: #00ff88;
+    font-size: 25px;
+    opacity: 0.8;
+}
+
+.stat-high .stat-icon {
+    color: #ff647c;
+}
+
+.stat-medium .stat-icon {
+    color: #ffc857;
+}
+
+.stat-low .stat-icon {
+    color: #00ff88;
+}
+
+@media (max-width: 900px) {
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 550px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
+/* PASSWORD STRENGTH INPUT FIX */
+
+.password-input-wrap {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    gap: 8px;
+}
+
+.password-input-wrap input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    padding: 13px 15px;
+    background: #0b130e !important;
+    color: #eaffef !important;
+    border: 1px solid #294333 !important;
+    border-radius: 8px;
+    outline: none;
+}
+
+.password-input-wrap input:focus {
+    border-color: #00ff88 !important;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.12);
+}
+
+.password-input-wrap button {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent !important;
+    color: #00ff88 !important;
+    border: 1px solid #294333 !important;
+    border-radius: 8px;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+
+.password-input-wrap button:hover {
+    background: rgba(0, 255, 136, 0.08) !important;
+    border-color: #00ff88 !important;
+}
+/* DARKWATCH MODULE CARD DESIGN */
+
+.panel {
+    background: linear-gradient(145deg, #121d16, #0b120e) !important;
+    border: 1px solid #263d2e !important;
+    border-radius: 15px !important;
+    padding: 24px !important;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.panel:hover {
+    border-color: #00ff88 !important;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.08);
+}
+
+.panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.panel-head h3 {
+    color: #eaffef;
+    font-size: 18px;
+}
+
+.panel .eyebrow {
+    color: #00ff88;
+    letter-spacing: 1.5px;
+    font-size: 10px;
+}
+
+.panel .tag {
+    color: #00ff88;
+    background: rgba(0, 255, 136, 0.08);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+}
+/* DARKWATCH CYBER ANIMATIONS */
+
+.main {
+    animation: dashboardEntry 0.8s ease;
+}
+
+@keyframes dashboardEntry {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scanning line effect */
+
+.hero {
+    position: relative;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    top: -5px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #00ff88,
+        transparent
+    );
+    box-shadow: 0 0 12px #00ff88;
+    animation: scanningLine 6s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanningLine {
+    from {
+        top: -5px;
+    }
+    to {
+        top: 100%;
+    }
+}
+
+/* Glowing status indicators */
+
+.status-dot {
+    animation: statusPulse 1.5s infinite;
+}
+
+/* Smooth button hover */
+
+button {
+    transition: all 0.25s ease;
+}
+
+button:hover {
+    filter: brightness(1.15);
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+/* TOPBAR LOGOUT BUTTON */
+
+.topbar-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 15px;
+    color: #ff7185 !important;
+    background: rgba(255, 80, 100, 0.06);
+    border: 1px solid rgba(255, 80, 100, 0.35);
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.topbar-logout:hover {
+    background: rgba(255, 80, 100, 0.15);
+    border-color: #ff7185;
+    box-shadow: 0 0 12px rgba(255, 80, 100, 0.15);
+}
